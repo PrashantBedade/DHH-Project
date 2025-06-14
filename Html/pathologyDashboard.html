@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathology Center Dashboard</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .dashboard {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 94vh;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: orange;
+        }
+
+        .sidebar a,
+        span {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover,
+        span:hover {
+            background-color: #384d63;
+        }
+
+        .main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #ecf0f1;
+            width: 100%;
+        }
+
+        .main h1 {
+            margin-bottom: 20px;
+        }
+
+        /* General form styling */
+        #pathology-form {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form group styling */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        /* Label styling */
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        /* Input styling */
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        /* Input focus effect */
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Read-only input styling */
+        .form-group input[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        /* Button styling */
+        #save-pathology-info {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        /* Button hover effect */
+        #save-pathology-info:hover {
+            background-color: #0056b3;
+        }
+
+        /* Button focus effect */
+        #save-pathology-info:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Form responsiveness */
+        @media (max-width: 768px) {
+            #pathology-form {
+                padding: 15px;
+            }
+
+            .form-group label {
+                font-size: 14px;
+            }
+
+            .form-group input {
+                font-size: 14px;
+                padding: 8px;
+            }
+
+            #save-pathology-info {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+        .logout-btn,
+        .home-page-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .home-page-btn {
+            background-color: #48bb78;
+        }
+
+        .home-page-btn:hover {
+            background-color: #38a169;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2>Pathology Center Dashboard</h2>
+            <span id="pathology-id">Pathology ID: 001</span>
+            <a href="#" id="pathology-info-link">Information</a>
+            <button id="logout-btn" class="logout-btn">Logout</button>
+            <button id="homePageBtn" class="home-page-btn">Homepage</button>
+    
+        </div>
+        <div class="main">
+            <h1>Pathology Center</h1>
+            <div class="data-section" id="data-section">
+                <!-- Pathology Information Section -->
+                <div id="pathology-info-section" class="info-section">
+                    <form id="pathology-form">
+                        <!-- Pathology ID (Read-Only) -->
+                        <div class="form-group">
+                            <label for="pathologyID">Pathology ID</label>
+                            <input type="text" id="pathologyID" name="pathologyID" class="form-control" readonly />
+                        </div>
+
+                        <!-- Pathology Name -->
+                        <div class="form-group">
+                            <label for="pathology_name">Pathology Name</label>
+                            <input type="text" id="pathology_name" name="pathology_name" class="form-control" />
+                        </div>
+
+                        <!-- Owner Name -->
+                        <div class="form-group">
+                            <label for="owner_name">Owner Name</label>
+                            <input type="text" id="owner_name" name="owner_name" class="form-control" />
+                        </div>
+
+                        <!-- License Number -->
+                        <div class="form-group">
+                            <label for="license_no">License Number</label>
+                            <input type="text" id="license_no" name="license_no" class="form-control" />
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" name="address" class="form-control" />
+                        </div>
+
+                        <!-- Mobile Number -->
+                        <div class="form-group">
+                            <label for="mobile_no">Mobile Number</label>
+                            <input type="text" id="mobile_no" name="mobile_no" class="form-control" />
+                        </div>
+
+                        <!-- Email ID -->
+                        <div class="form-group">
+                            <label for="email_id">Email ID</label>
+                            <input type="email" id="email_id" name="email_id" class="form-control" />
+                        </div>
+                        <!-- Submit Button -->
+                        <button type="submit" id="save-pathology-info" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+
+
+                <!-- Appointments Section -->
+                <div id="appointments-section" class="appointment-section">
+                    <div id="appointments-booked-section" style="display:none;">
+                        <h4>Booked Appointments</h4>
+                        <table class="appointment-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Test Type</th>
+                                    <th>Appointment Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointments-booked-body">
+                                <!-- Booked appointments will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="appointments-accepted-section" style="display:none;">
+                        <h4>Accepted Appointments</h4>
+                        <table class="appointment-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Test Type</th>
+                                    <th>Appointment Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointments-accepted-body">
+                                <!-- Accepted appointments will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="appointments-canceled-section" style="display:none;">
+                        <h4>Canceled Appointments</h4>
+                        <table class="appointment-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Name</th>
+                                    <th>Test Type</th>
+                                    <th>Appointment Time</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="appointments-canceled-body">
+                                <!-- Canceled appointments will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("homePageBtn").onclick = function () {
+            window.location.href = "index.html"; // Replace 'index.html' with your homepage URL
+        };
+
+        document.getElementById('logout-btn').addEventListener('click', function () {
+            // Remove user session data from localStorage or sessionStorage
+            localStorage.removeItem('authToken');  // Example using localStorage, change as per your implementation
+            sessionStorage.removeItem('authToken'); // If you use sessionStorage
+
+            // Redirect to the login page after logout
+            window.location.href = 'login.html'; // Replace with the actual login page URL
+        });
+
+
+        const token = localStorage.getItem('authToken');
+
+
+        // Fetch Pathology Details and Populate the Form
+        async function fetchPathologyDetails() {
+            try {
+                const response = await fetch('http://localhost:5011/api/pathology/pathology/details', {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+
+                const pathology = await response.json();
+
+                // Populate form fields with fetched data
+                document.getElementById("pathologyID").value = pathology.pathologyID;
+                document.getElementById("pathology_name").value = pathology.pathology_name;
+                document.getElementById("owner_name").value = pathology.owner_name;
+                document.getElementById("license_no").value = pathology.license_no;
+                document.getElementById("address").value = pathology.address;
+                document.getElementById("mobile_no").value = pathology.mobile_no;
+                document.getElementById("email_id").value = pathology.email_id;
+            } catch (error) {
+                console.error("Failed to fetch pathology details:", error);
+                alert("Failed to fetch pathology details. Please try again later.");
+            }
+        }
+
+        // Update Pathology Details
+        async function updatePathologyDetails(event) {
+            event.preventDefault(); // Prevent form submission
+
+            try {
+                const updates = {
+                    pathology_name: document.getElementById("pathology_name").value,
+                    owner_name: document.getElementById("owner_name").value,
+                    license_no: document.getElementById("license_no").value,
+                    address: document.getElementById("address").value,
+                    mobile_no: document.getElementById("mobile_no").value,
+                    email_id: document.getElementById("email_id").value,
+                };
+
+                const response = await fetch('http://localhost:5011/api/pathology/update-details', {
+                    method: "PUT",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(updates),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                alert(result.message); // Notify user about the update status
+            } catch (error) {
+                console.error("Failed to update pathology details:", error);
+                alert("Failed to update pathology details. Please try again later.");
+            }
+        }
+
+        // Attach Event Listeners
+        document.addEventListener("DOMContentLoaded", fetchPathologyDetails); // Fetch details on page load
+        document.getElementById("pathology-form").addEventListener("submit", updatePathologyDetails); // Handle form submission
+
+
+    </script>
+</body>
+
+</html>

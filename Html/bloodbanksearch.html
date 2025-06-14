@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Blood Banks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 96vh;
+            background-color: #f8f9fa;
+            z-index: 0.2;
+            background: url('../assets/bloodbank_back.jpg') no-repeat center center / cover;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .search {
+            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 60%;
+        }
+
+        .terms {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-right: 10px;
+        }
+
+        select,
+        input[type="text"] {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 48%;
+        }
+
+        button[type="submit"] {
+            background-color: #d9534f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #c9302c;
+        }
+
+        .result {
+            margin: 20px auto;
+            width: 90%;
+        }
+
+        .result table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            max-height: 90vh;
+            display: block;
+            overflow-y: auto; /* Add vertical scrollbar */
+        }
+        .result-inside{
+            width: 100%;
+            height: 400px;
+            overflow-y: scroll;
+        }
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #d9534f;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+            color: #333;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #ffe6e6;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Search Blood Banks</h1>
+    <div class="search">
+        <form id="searchForm">
+            <div class="terms">
+                <label for="searchBy">Search by:</label>
+                <select id="searchBy" name="searchBy">
+                    <option value="blood_type">Blood Type</option>
+                    <option value="blood_component">Blood Component</option>
+                </select>
+
+                <label for="searchTerm">Search Term:</label>
+                <input type="text" id="searchTerm" name="searchTerm">
+            </div>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="result">
+        <h2>Results:</h2>
+        <div class="result-inside">
+        <table id="resultsTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Blood Bank Name</th>
+                    <th>Blood Type</th>
+                    <th>Blood Component</th>
+                    <th>Volume (ml)</th>
+                    <th>Donation Date</th>
+                    <th>Expiration Date</th>
+                    <th>Quantity Available</th>
+                    <th>Contact Number</th>
+                    <th>Address</th>
+                    <th>Blood Condition</th>
+                    <th>Blood Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Results will be displayed here -->
+            </tbody>
+        </table>
+    </div></div>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const searchBy = document.getElementById('searchBy').value;
+            const searchTerm = document.getElementById('searchTerm').value;
+
+            if (!searchTerm) {
+                alert('Please enter a search term.');
+                return;
+            }
+
+            const body = {};
+            if (searchBy === 'blood_type') body.searchTerm1 = searchTerm;
+            if (searchBy === 'blood_component') body.searchTerm2 = searchTerm;
+
+            try {
+                const response = await fetch('http://localhost:5011/api/blood/serachblood', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    const resultsTable = document.getElementById('resultsTable').querySelector('tbody');
+                    resultsTable.innerHTML = ''; // Clear previous results
+
+                    data.Blood.forEach((row, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${row.bloodbank_name}</td>
+                            <td>${row.blood_type}</td>
+                            <td>${row.blood_component}</td>
+                            <td>${row.volume_ml}</td>
+                            <td>${row.donation_date}</td>
+                            <td>${row.expiration_date}</td>
+                            <td>${row.quantity_available}</td>
+                            <td>${row.phone_no}</td>
+                            <td>${row.address}</td>
+                            <td>${row.blood_condition}</td>
+                            <td>${row.blood_status}</td>
+                        `;
+                        resultsTable.appendChild(tr);
+                    });
+                } else {
+                    alert(data.error || 'No blood banks found.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('An error occurred while fetching the results.');
+            }
+        });
+    </script>
+</body>
+
+</html>

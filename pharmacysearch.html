@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Pharmacies</title>
+    <style>
+        body {
+            background: url('./Pharmacy.jpg' ) no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            min-height: 96vh;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 40px;
+            color: #000000;
+            filter: drop-shadow(30px 30px 10px #ffffff) drop-shadow(-30px -30px 10px #ffffff);
+        }
+
+        .search {
+            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 60%;
+        }
+        
+        .terms {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 60%;
+            margin: 10px auto;
+        }
+        
+        label {
+            font-size: 20px;
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 5px;
+
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 18px;
+            border: 1px solid #0a9604;
+            border-radius: 4px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        input:hover {
+            border: 1px solid #1F89E5;
+        }
+        
+        button[type="submit"] {
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 20%;
+            font-weight: bold;
+            background-color: #0a9604;
+        }
+        
+        button[type="submit"]:hover {
+            background-color: #1F89E5;
+        }
+
+        .result {
+            margin: 20px auto;
+            width: 90%;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0a9604;
+            color: white;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #fff;
+            color: #333;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f8ff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Search Medicines</h1>
+    <div class="search">
+        <form id="searchForm">
+            <div class="terms">
+                <label for="searchTerm">Enter Medicine Name:</label>
+                <input type="text" id="searchTerm" name="searchTerm" placeholder="Search by medicine name">
+            </div>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="result">
+        <h2>Results:</h2>
+        <table id="resultsTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Pharmacy Name</th>
+                    <th>Medicine Name</th>
+                    <th>Price</th>
+                    <th>Manufacturer</th>
+                    <th>Type</th>
+                    <th>Pack Size</th>
+                    <th>Composition 1</th>
+                    <th>Composition 2</th>
+                    <th>Owner Name</th>
+                    <th>Address</th>
+                    <th>Phone No.</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Results will be displayed here -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const searchTerm = document.getElementById('searchTerm').value.trim();
+
+            if (!searchTerm) {
+                alert('Please enter a search term.');
+                return;
+            }
+
+            try {
+                // Make a POST request to the backend API
+                const response = await fetch('http://localhost:5011/api/ph/viewall', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ searchTerm }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    const resultsTable = document.getElementById('resultsTable').querySelector('tbody');
+                    resultsTable.innerHTML = ''; // Clear previous results
+
+                    data.medicines.forEach((row, index) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td>${index + 1}</td> <!-- Use index + 1 for the row ID -->
+        <td>${row.pharmacy_name}</td>
+        <td>${row.name}</td>
+        <td>${row.price}</td>
+        <td>${row.manufacturer_name}</td>
+        <td>${row.type}</td>
+        <td>${row.pack_size_label}</td>
+        <td>${row.short_composition1}</td>
+        <td>${row.short_composition2}</td>
+        <td>${row.owner_name}</td>
+        <td>${row.address}</td>
+        <td>${row.phone_no}</td>
+    `;
+    resultsTable.appendChild(tr);
+});
+                } else {
+                    alert(data.error || 'An error occurred while fetching the results.');
+                }
+            } catch (error) {
+                console.error(error);
+                alert('A server error occurred. Please try again later.');
+            }
+        });
+    </script>
+</body>
+
+</html>

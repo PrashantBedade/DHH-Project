@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/loginRegister.css">
+    <title>Login</title>
+    <style>
+        #homePageBtn {
+            color: rgb(0, 0, 0);
+            position: relative;
+            top: -150px;
+            background-color: #1F89E5;
+            color: #fff;
+            padding: 10px;
+            left: 10px;
+            border-radius: 10px;
+        }
+
+        #dashboard-btn {
+            position: relative;
+            color: rgb(0, 0, 0);
+            position: relative;
+            border-radius: 10px;
+            top: -100px;
+            background-color: #1F89E5;
+            color: #fff;
+            padding: 10px;
+            left: -80px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="containermain">
+        <h2>Login</h2>
+        <h2>Welcome Back</h2>
+        <button id="homePageBtn" class="home-page-btn">Homepage</button>
+        <button id="dashboard-btn">Dashboard</button>
+
+        <div class="containercontent">
+            <div class="container1">
+                <div class="login">
+                    <div class="loginform">
+                        <form id="loginForm" method="POST">
+                            <label for="loginAs">Login As:</label>
+                            <select id="loginAs" name="role" required>
+                                <option value="Default" disabled selected>Select Login</option>
+                                <option value="Patient">Patient</option>
+                                <option value="Hospital">Hospital</option>
+                                <option value="Doctor">Doctor</option>
+                                <option value="Nurse">Nurse</option>
+                                <option value="Receptionist">Receptionist</option>
+                                <option value="Pharmacy">Pharmacy</option>
+                                <option value="Blood Bank">Blood Bank</option>
+                                <option value="Pathology">Pathology</option>
+                            </select>
+
+                            <div class="username">
+                                <label for="username"><strong>Username:</strong></label>
+                                <input type="text" id="username" name="username" placeholder="Enter Your Username"
+                                    required>
+                            </div>
+
+                            <div class="password">
+                                <label for="password"><strong>Password:</strong></label>
+                                <input type="password" id="password" name="password" placeholder="Enter Your Password"
+                                    required>
+                            </div>
+
+                            <div class="submitbtn">
+                                <button type="submit">Login</button>
+                            </div>
+
+                            <a id="registerlink" href="patientregistrform.html"
+                                style="font-size: 14px; text-decoration: none;">Don't have an account? Register (Patient
+                                only)</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="container2">
+                <!-- Placeholder for image or content -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('dashboard-btn').addEventListener('click', () => {
+            // Get the JWT token from localStorage
+            const token = localStorage.getItem('authToken');
+
+            if (!token) {
+                alert('No Login session found. Please log in.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Decode the JWT token
+            const payload = JSON.parse(atob(token.split('.')[1])); // Decode base64 part of JWT token
+
+            // Check if the token contains the necessary ID for redirection
+            if (payload.patientID) {
+                window.location.href = 'patientDashboard.html';
+            } else if (payload.doctorID) {
+                window.location.href = 'doctorDashboard.html';
+            } else if (payload.nurseID) {
+                window.location.href = 'nurseDashboard.html';
+            } else if (payload.receptionistID) {
+                window.location.href = 'receptionistDashboard.html';
+            } else if (payload.hospitalID) {
+                window.location.href = 'hospitalDashboard.html';
+            } else if (payload.bloodbankID) {
+                window.location.href = 'bloodbankDashboard.html';
+            } else if (payload.pharmacyID) {
+                window.location.href = 'pharmacyDashboard.html';
+            } else if (payload.userType == 'Hospital') {
+            } else if (payload.pathologyID) {
+                window.location.href = 'pathologyDashboard.html';
+            } else if (payload.userType == 'Hospital') {
+                window.location.href = 'HospitalAdmin.html';
+            } else {
+                alert('No valid ID found in token.');
+            }
+        });
+        document.getElementById("homePageBtn").onclick = function () {
+            window.location.href = "index.html"; // Replace 'index.html' with your homepage URL
+        };
+
+
+        function decodeJWT(token) {
+            try {
+                const payload = token.split('.')[1];
+                return JSON.parse(atob(payload));
+            } catch (error) {
+                console.error('Failed to decode token:', error);
+                return null;
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+
+            loginForm.addEventListener('submit', async (event) => {
+                event.preventDefault(); // Prevent default form submission behavior
+
+                const role = document.getElementById('loginAs').value;
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+
+                if (role === 'Default' || !role || !username || !password) {
+                    alert('Please fill in all fields and select a role.');
+                    return;
+                }
+
+                try {
+                    // Make the POST request to login API
+                    const response = await fetch('http://localhost:5011/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ role, username, password }),
+                    });
+
+                    const result = await response.json();
+
+                    // Inside the loginForm event listener after the token is saved to localStorage
+                    if (response.ok) {
+                        // Store token in localStorage
+                        localStorage.setItem('authToken', result.token);
+
+                        // Decode the JWT token (optional)
+                        const decodedPayload = decodeJWT(result.token);
+                        console.log('Decoded Token Payload:', decodedPayload);
+
+                        // Alert showing whether the token was saved and the token itself
+                        const savedToken = localStorage.getItem('authToken');
+                        alert(`Login successful!`);
+                        console.log(`${savedToken}`);
+
+                        // Check if token is valid
+                        if (savedToken) {
+                            console.log('Token is saved in localStorage:', savedToken);
+                        } else {
+                            console.log('Token is not saved in localStorage.');
+                        }
+
+                        // Redirect based on role
+                        switch (role) {
+                            case 'Patient':
+                                window.location.href = 'patientdashboard.html';
+                                break;
+                            case 'Pharmacy':
+                                window.location.href = 'pharmacydashboard.html';
+                                break;
+                            case 'Blood Bank':
+                                window.location.href = 'bloodbankdashboard.html';
+                                break;
+                            case 'Receptionist':
+                                window.location.href = 'receptionistDashboard.html';
+                                break;
+                            case 'Nurse':
+                                window.location.href = 'nurseDashboard.html';
+                                break;
+                            case 'Doctor':
+                                window.location.href = 'DoctorDashboard.html';
+                                break;
+                            case 'Hospital':
+                                window.location.href = 'HospitalAdmin.html';
+                                break;
+                            case 'Pathology':
+                                window.location.href = 'pathologyDashboard.html';
+                                break;
+                            default:
+                                alert('Invalid role.');
+                        }
+
+                    } else {
+                        alert(result.message || 'Login failed. Please try again.');
+                    }
+
+                } catch (error) {
+                    console.error('Error logging in:', error);
+                    alert('An error occurred during login. Please try again.');
+                }
+            });
+        });
+
+        // Automatically fill username and password fields on the login page
+        window.addEventListener('load', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+            const password = urlParams.get('password');
+
+            if (username && password) {
+                const usernameField = document.getElementById('username');
+                const passwordField = document.getElementById('password');
+
+                if (usernameField && passwordField) {
+                    usernameField.value = username;
+                    passwordField.value = password;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

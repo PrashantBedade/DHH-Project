@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        *{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        body{
+            /* background: url("../assets/backgroundslide2.jpg")no-repeat center center/cover;*/
+            background-color: #90bfc9
+        }
+       .add-pharmacy{
+            background-color:rgba(255, 255, 255, 0.3);
+            padding:20px;
+            color: #fff;
+        }
+        #addBloodBankForm{
+            background-color:rgba(255,255,255,0.2);
+            padding: 20px;
+        }
+        #addPathologyForm{
+            background-color:rgba(255,255,255,0.2);
+            padding: 20px;
+        }
+        #addHospitalAdminForm{
+            background-color:rgba(255,255,255,0.2);
+            padding: 20px;
+        }
+        button:hover{
+            background-color: rgb(154, 232, 18);
+            color: #000000;
+            font-weight: bold;
+            box-shadow:2px 2px 2px black;
+        }
+    </style>
+</head>
+<body >
+
+    <div class="max-w-7xl mx-auto p-6">
+        <h1 class="text-5xl font-bold text-center mb-9" style="color: #1F89E5;">System Admin Dashboard</h1>
+
+        <!-- Add Pharmacy Form -->
+        <h2 class="text-xl font-bold mb-4">Add Pharmacy</h2>
+        <form class="add-pharmacy">
+            <div class="mb-4" id="add-pharmacy">
+                <label for="pharmacyName" class="block text-md font-medium text-gray-900">Pharmacy Name</label>
+                <input type="text" id="pharmacyName" name="pharmacyName" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-md font-medium text-gray-900">Address</label>
+                <input type="text" id="address" name="address" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="ownerName" class="block text-md font-medium text-gray-900">Owner Name</label>
+                <input type="text" id="ownerName" name="ownerName" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="licenseNo" class="block text-md font-medium text-gray-900">License No</label>
+                <input type="text" id="licenseNo" name="licenseNo" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="phoneNo" class="block text-md font-medium text-gray-900">Phone No</label>
+                <input type="text" id="phoneNo" name="phoneNo" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-md font-medium text-gray-900">Password</label>
+                <input type="password" id="password" name="password" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Pharmacy</button>
+        </form>
+
+        <!-- Add Blood Bank Form -->
+        <h2 class="text-xl font-bold mt-8 mb-4">Add Blood Bank</h2>
+        <form id="addBloodBankForm">
+            <div class="mb-4">
+                <label for="bloodbankName" class="block text-md font-medium text-gray-900">Blood Bank Name</label>
+                <input type="text" id="bloodbankName" name="bloodbankName" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-md font-medium text-gray-900">Address</label>
+                <input type="text" id="address" name="address" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="ownerName" class="block text-md font-medium text-gray-900">Owner Name</label>
+                <input type="text" id="ownerName" name="ownerName" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="licenseNo" class="block text-md font-medium text-gray-900">License No</label>
+                <input type="text" id="licenseNo" name="licenseNo" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="phoneNo" class="block text-md font-medium text-gray-900">Phone No</label>
+                <input type="text" id="phoneNo" name="phoneNo" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="type" class="block text-md font-medium text-gray-900">Type</label>
+                <input type="text" id="type" name="type" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-md font-medium text-gray-900">Password</label>
+                <input type="password" id="password" name="password" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Blood Bank</button>
+        </form>
+
+        <!-- Add Pathology Form -->
+        <h2 class="text-xl font-bold mt-8 mb-4">Add Pathology</h2>
+        <form id="addPathologyForm">
+            <div class="mb-4">
+                <label for="pathologyName" class="block text-md font-medium text-gray-900">Pathology Name</label>
+                <input type="text" id="pathologyName" name="pathologyName" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="ownerName" class="block text-md font-medium text-gray-900">Owner Name</label>
+                <input type="text" id="ownerName" name="ownerName" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="licenseNo" class="block text-md font-medium text-gray-900">License No</label>
+                <input type="text" id="licenseNo" name="licenseNo" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="mobileNo" class="block text-md font-medium text-gray-900">Mobile No</label>
+                <input type="text" id="mobileNo" name="mobileNo" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="emailId" class="block text-md font-medium text-gray-900">Email ID</label>
+                <input type="email" id="emailId" name="emailId" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-md font-medium text-gray-900">Address</label>
+                <input type="text" id="address" name="address" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-md font-medium text-gray-900">Password</label>
+                <input type="password" id="password" name="password" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Pathology</button>
+        </form>
+
+        <!-- Add Hospital & Admin Form -->
+        <h2 class="text-xl font-bold mt-8 mb-4">Add Hospital & Admin</h2>
+        <form id="addHospitalAdminForm">
+            <div class="mb-4">
+                <label for="hospitalName" class="block text-md font-medium text-gray-900">Hospital Name</label>
+                <input type="text" id="hospitalName" name="hospitalName" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-md font-medium text-gray-900">Hospital Address</label>
+                <input type="text" id="address" name="address" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="contactNumber" class="block text-md font-medium text-gray-900">Contact Number</label>
+                <input type="text" id="contactNumber" name="contactNumber" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-md font-medium text-gray-900">Email</label>
+                <input type="email" id="email" name="email" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="adminName" class="block text-md font-medium text-gray-900">Admin Name</label>
+                <input type="text" id="adminName" name="adminName" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="adminUsername" class="block text-md font-medium text-gray-900">Admin Username</label>
+                <input type="text" id="adminUsername" name="adminUsername" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="adminPassword" class="block text-md font-medium text-gray-900">Admin Password</label>
+                <input type="password" id="adminPassword" name="adminPassword" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Hospital & Admin</button>
+        </form>
+    </div>
+
+    <script>
+        // Event handlers for form submissions
+        document.getElementById('addPharmacyForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const pharmacyData = {
+                pharmacyName: document.getElementById('pharmacyName').value,
+                address: document.getElementById('address').value,
+                ownerName: document.getElementById('ownerName').value,
+                licenseNo: document.getElementById('licenseNo').value,
+                phoneNo: document.getElementById('phoneNo').value,
+                password: document.getElementById('password').value
+            };
+
+            const response = await fetch('/api/pharmacy', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(pharmacyData),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert('Pharmacy added successfully!');
+            } else {
+                alert('Failed to add pharmacy');
+            }
+        });
+
+        // Similarly, you can add event handlers for other forms like addBloodBankForm, addPathologyForm, and addHospitalAdminForm
+    </script>
+</body>
+</html>

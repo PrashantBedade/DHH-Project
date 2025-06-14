@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management</title>
+    <style>
+        * {
+            scroll-behavior: smooth;
+            box-sizing: border-box;
+        }
+
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7fc;
+        }
+
+        #pd {
+            color: #f4f7fc;
+        }
+
+        h2 {
+            color: #4299e1;
+            font-size: 1.5rem;
+        }
+
+        .container {
+            display: flex;
+            max-width: 100%;
+            height: 100vh;
+            background-color: #f4f7fc;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #2b6cb0;
+            color: white;
+            padding-top: 20px;
+            padding-left: 20px;
+            height: 100%;
+        }
+
+        .sidebar h2 {
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            font-size: 1.1rem;
+            padding: 12px 0;
+            text-decoration: none;
+            margin-bottom: 10px;
+            width: 60%;
+            text-align: center;
+        }
+
+        .sidebar a:hover {
+            background-color: #3182ce;
+            border-radius: 4px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        /* Add Medicine Form Styling */
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-container input,
+        .form-container button {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-container button {
+            background-color: #4299e1;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #3182ce;
+        }
+
+        /* Inventory Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        th {
+            background-color: #edf2f7;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: white;
+        }
+
+        /* Responsive Design for Smaller Screens */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+
+            .main-content {
+                padding: 10px;
+            }
+
+            .form-container input,
+            .form-container button {
+                width: 100%;
+            }
+        }
+
+        /* Flexbox Layout for Forms */
+        .inventorycontaoner {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mt-67 {
+            flex: 1;
+            width: 100%;
+        }
+
+        .logout-btn,
+        .home-page-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .home-page-btn {
+            background-color: #48bb78;
+        }
+
+        .home-page-btn:hover {
+            background-color: #38a169;
+        }
+        #Editbtn{
+            background-color: #4299e1;
+            color: white;
+            font-weight: bold;
+            padding: 3px;
+            margin-bottom: 3px;
+            border-radius: 5px;
+        }
+        #Deletebtn{
+            border-radius: 5px;
+            background-color: #e74c3c;
+            font-weight: bold;
+            padding: 3px;
+            margin-bottom: 3px;
+            color: white;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2 id="pd">Pharmacy Dashboard</h2>
+            <a href="#pharmacydetails">Pharmacy Info</a>
+            <a href="#addMedicine">Add Medicine</a>
+            <a href="#editMedicine">Edit Medicine</a>
+            <a href="#viewInventory">View Inventory</a>
+            <button id="logout-btn" class="logout-btn">Logout</button>
+            <button id="homePageBtn" class="home-page-btn">Homepage</button>
+
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Pharmacy Details Section -->
+            <div id="pharmacyDetails" class="mt-6">
+                <h2 id="pharmacydetails">Pharmacy Details</h2>
+                <div id="pharmacyInfo" class="form-container"></div>
+            </div>
+
+            <div class="inventorycontaoner">
+                <!-- Add Medicine Form -->
+                <div id="addMedicine" class="mt-67">
+                    <h2>Add Medicine</h2>
+                    <div class="form-container">
+                        <form id="addMedicineForm">
+                            <input type="text" id="name" placeholder="Medicine Name" required />
+                            <input type="number" id="price" placeholder="Price" step="0.01" required />
+                            <input type="text" id="manufacturer_name" placeholder="Manufacturer Name" required />
+                            <input type="text" id="type" placeholder="Type (e.g., Tablet, Syrup)" required />
+                            <input type="text" id="pack_size_label" placeholder="Pack Size (e.g., 10 Tablets)"
+                                required />
+                            <input type="text" id="short_composition1" placeholder="Composition 1" required />
+                            <input type="text" id="short_composition2" placeholder="Composition 2" />
+                            <input type="date" id="mfg_date" placeholder="Manufacturing Date" required />
+                            <input type="date" id="exp_date" placeholder="Expiry Date" required />
+                            <button type="submit">Add Medicine</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Edit Medicine Form -->
+                <div id="editMedicine" class="mt-67">
+                    <h2>Edit Medicine</h2>
+                    <div class="form-container">
+                        <form id="editMedicineForm">
+                            <input type="text" id="edit_id" placeholder="ID" readonly/>
+                            <input type="text" id="edit_name" placeholder="Medicine Name" />
+                            <input type="number" id="edit_price" placeholder="Price" step="0.01" />
+                            <input type="text" id="edit_manufacturer_name" placeholder="Manufacturer Name" />
+                            <input type="text" id="edit_type" placeholder="Type (e.g., Tablet, Syrup)" />
+                            <input type="text" id="edit_pack_size_label" placeholder="Pack Size (e.g., 10 Tablets)" />
+                            <input type="text" id="edit_short_composition1" placeholder="Composition 1" />
+                            <input type="text" id="edit_short_composition2" placeholder="Composition 2" />
+                            <input type="date" id="edit_mfg_date" placeholder="Manufacturing Date" />
+                            <input type="date" id="edit_exp_date" placeholder="Expiry Date" />
+                            <button type="submit">Update Medicine</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medicine Inventory Section -->
+<!-- Medicine Inventory Section -->
+<div id="viewInventory" class="mt-6" style="height: 80vh; overflow-y: auto; border: 1px solid #ccc; margin-top: 10px;">
+    <h2 style="text-align: center;">Medicine Inventory</h2>
+    <table id="inventoryTable" class="min-w-full border mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Manufacturer</th>
+                <th>Type</th>
+                <th>Pack Size</th>
+                <th>Composition 1</th>
+                <th>Composition 2</th>
+                <th>Mfg Date</th>
+                <th>Exp Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="inventoryBody"></tbody>
+    </table>
+</div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+
+    document.getElementById("homePageBtn").onclick = function () {
+        window.location.href = "index.html"; // Replace 'index.html' with your homepage URL
+    };
+
+    document.getElementById('logout-btn').addEventListener('click', function () {
+        // Remove user session data from localStorage or sessionStorage
+        localStorage.removeItem('authToken');  // Example using localStorage, change as per your implementation
+        sessionStorage.removeItem('authToken'); // If you use sessionStorage
+
+        // Redirect to the login page after logout
+        window.location.href = 'login.html'; // Replace with the actual login page URL
+    });
+
+
+    const token = localStorage.getItem('authToken');
+
+    if (!token) {
+        alert('Please Login Before Use. Redirecting to login.');
+        window.location.href = 'login.html';
+    }
+
+    const pharmacyInfoContainer = document.getElementById('pharmacyInfo');
+    const inventoryBody = document.getElementById('inventoryBody');
+    const addMedicineForm = document.getElementById('addMedicineForm');
+    const editMedicineForm = document.getElementById('editMedicineForm');
+
+    // Fetch Pharmacy Details
+    const fetchPharmacyDetails = () => {
+        fetch('http://localhost:5011/api/ph/pharmacybyID', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                pharmacyInfoContainer.innerHTML = `
+                    <p><strong>Pharmacy ID:</strong> ${data.pharmacy_id}</p>
+                    <p><strong>Pharmacy Name:</strong> ${data.pharmacy_name}</p>
+                    <p><strong>Owner Name:</strong> ${data.owner_name}</p>
+                    <p><strong>Address:</strong> ${data.address}</p>
+                    <p><strong>Phone Number:</strong> ${data.phone_no}</p>
+                    <p><strong>License Number:</strong> ${data.license_no}</p>
+                `;
+            })
+            .catch((error) => console.error('Error fetching pharmacy details:', error));
+    };
+
+    // Fetch Medicine Inventory
+    const fetchInventory = () => {
+        fetch('http://localhost:5011/api/ph/getmedicine1', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                const medicines = data.medicines || [];
+                inventoryBody.innerHTML = medicines.length
+                    ? medicines.map(med => `
+                        <tr>
+                            <td>${med.id}</td>
+                            <td>${med.name}</td>
+                            <td>${med.price}</td>
+                            <td>${med.manufacturer_name}</td>
+                            <td>${med.type}</td>
+                            <td>${med.pack_size_label}</td>
+                            <td>${med.short_composition1}</td>
+                            <td>${med.short_composition2}</td>
+                            <td>${new Date(med.mfg_date).toLocaleDateString()}</td>
+                            <td>${new Date(med.exp_date).toLocaleDateString()}</td>
+                            <td>
+                                <button id="Editbtn" onclick='editMedicine(${JSON.stringify(med)})'>Edit</button>
+                                <button id="Deletebtn" onclick='deleteMedicine(${med.id})'>Delete</button>
+                            </td>
+                        </tr>
+                    `).join('')
+                    : '<tr><td colspan="11">No medicines found</td></tr>';
+            })
+            .catch((error) => console.error('Error fetching inventory:', error));
+    };
+
+    // Edit Medicine
+    // Edit Medicine
+    const editMedicine = (medicine) => {
+        console.log(medicine); // Debugging line to check what data is passed
+        document.getElementById('edit_id').value = medicine.id;
+        document.getElementById('edit_name').value = medicine.name;
+        document.getElementById('edit_price').value = medicine.price;
+        document.getElementById('edit_manufacturer_name').value = medicine.manufacturer_name;
+        document.getElementById('edit_type').value = medicine.type;
+        document.getElementById('edit_pack_size_label').value = medicine.pack_size_label;
+        document.getElementById('edit_short_composition1').value = medicine.short_composition1;
+        document.getElementById('edit_short_composition2').value = medicine.short_composition2 || '';
+        document.getElementById('edit_mfg_date').value = medicine.mfg_date;
+        document.getElementById('edit_exp_date').value = medicine.exp_date;
+    };
+
+    // Delete Medicine
+    const deleteMedicine = (id) => {
+        fetch('http://localhost:5011/api/ph/deletemedecine', {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ id }),
+        })
+            .then(() => {
+                fetchInventory(); // Refresh inventory list
+                alert('Medicine deleted successfully');
+            })
+            .catch((error) => console.error('Error deleting medicine:', error));
+    };
+
+    // Submit Add Medicine
+    addMedicineForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newMedicine = {
+            name: document.getElementById('name').value,
+            price: parseFloat(document.getElementById('price').value),
+            manufacturer_name: document.getElementById('manufacturer_name').value,
+            type: document.getElementById('type').value,
+            pack_size_label: document.getElementById('pack_size_label').value,
+            short_composition1: document.getElementById('short_composition1').value,
+            short_composition2: document.getElementById('short_composition2').value,
+            mfg_date: document.getElementById('mfg_date').value,
+            exp_date: document.getElementById('exp_date').value,
+        };
+        fetch('http://localhost:5011/api/ph/addmedicine1', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newMedicine),
+        })
+            .then((response) => response.json())
+            .then(() => {
+                fetchInventory(); // Refresh inventory list
+                alert('Medicine added successfully');
+            })
+            .catch((error) => console.error('Error adding medicine:', error));
+    });
+
+    // Submit Edit Medicine
+    editMedicineForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const updatedMedicine = {
+            id: document.getElementById('edit_id').value,
+            name: document.getElementById('edit_name').value,
+            price: parseFloat(document.getElementById('edit_price').value),
+            manufacturer_name: document.getElementById('edit_manufacturer_name').value,
+            type: document.getElementById('edit_type').value,
+            pack_size_label: document.getElementById('edit_pack_size_label').value,
+            short_composition1: document.getElementById('edit_short_composition1').value,
+            short_composition2: document.getElementById('edit_short_composition2').value,
+            mfg_date: document.getElementById('edit_mfg_date').value,
+            exp_date: document.getElementById('edit_exp_date').value,
+        };
+        console.log(updatedMedicine); // Debugging line to check the updated data
+        fetch('http://localhost:5011/api/ph/EditInventory', {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedMedicine),
+        })
+            .then((response) => response.json())
+            .then(() => {
+                fetchInventory(); // Refresh inventory list
+                alert('Medicine updated successfully');
+            })
+            .catch((error) => console.error('Error updating medicine:', error));
+    });
+
+    // Initialize page
+    fetchPharmacyDetails();
+    fetchInventory();
+</script>
+</body>
+
+</html>

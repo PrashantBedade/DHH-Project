@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nurse Dashboard</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .dashboard {
+            display: flex;
+            height: 9vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 94vh;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: orange;
+        }
+
+        .sidebar a,
+        span {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover,
+        span:hover {
+            background-color: #384d63;
+        }
+
+        .main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #ecf0f1;
+            width: 100%;
+            display: none;
+            min-height: 94vh;
+            height: 100%;
+        }
+
+        .main.active {
+            display: block;
+        }
+
+        .main h1 {
+            margin-bottom: 20px;
+        }
+
+        .data-section,
+        .nurse-info-section {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #add-symptom-btn,
+        #submit-btn {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        #add-symptom-btn:disabled,
+        #submit-btn:disabled {
+            background-color: #7f8c8d;
+            cursor: not-allowed;
+        }
+
+        .predicted-section {
+            background: #f7ecec;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .predicted-section h2 {
+            margin-bottom: 15px;
+            color: #010810;
+        }
+
+        .predicted-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .predicted-section ul li {
+            margin-bottom: 10px;
+        }
+
+        #predicted-section ul li span {
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .logout-btn,
+        .home-page-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .home-page-btn {
+            background-color: #48bb78;
+        }
+
+        .home-page-btn:hover {
+            background-color: #38a169;
+        }
+
+        #edit-nurse-btn {
+            display: block;
+            margin: auto;
+            padding: 5px 20px;
+            background-color: #1f89e5;
+            color: #fff;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 10px;
+        }
+
+        .nurse-info-section-inside {
+            /* border: #000000 2px solid; */
+            background-color: #ecf0f1;
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            font-size: 18px;
+        }
+
+        .form-group input {
+            width: 98%;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .case_paper {
+            width: 50%;
+            margin: auto;
+        }
+
+        .case_paper button {
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <p style="font-size: 18px; color: black;"><strong>Accuracy:</strong> ${casePaper.accuracy ? casePaper.accuracy : "N/A"}</p> -->
+
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2>Nurse Dashboard</h2>
+            <span id="nurse-id">Nurse ID: </span>
+            <a href="#" id="info-link">Information</a>
+            <a href="#" id="case-paper-link">Case Paper</a>
+            <button id="logout-btn" class="logout-btn">Logout</button>
+            <button id="homePageBtn" class="home-page-btn">Homepage</button>
+
+        </div>
+
+        <div class="main" id="nurse-info-section">
+            <h1>Welcome to Nurse Dashboard</h1>
+            <div class="nurse-info-section" id="nurse-info-section">
+                <div class="nurse-info-section-inside">
+                    <h2>Nurse Information</h2>
+                    <form action="" class="nurse-info" id="nurse-info-form">
+                        <div class="form-group">
+                            <label for="nurse-id-input">Nurse ID:</label>
+                            <input type="text" id="nurse-id-input" value="" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="first-name">First Name:</label>
+                            <input type="text" id="first-name" name="firstName" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="surname">Surname:</label>
+                            <input type="text" id="surname" name="surname" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="text" id="phone" name="phone" value="">
+                        </div>
+                        <button type="button" id="edit-nurse-btn">Edit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="main" id="data-section">
+            <h1>Case Paper</h1>
+            <div class="data-section" id="data-section">
+                <form action="" class="case_paper" id="case_paper">
+                    <div class="form-group">
+                        <label for="patientID">Patient ID:</label>
+                        <input type="text" id="patientID" name="patientID" required>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="temperature">Temperature:</label>
+                        <input type="text" id="temperature" name="temp" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bp">Blood Pressure:</label>
+                        <input type="text" id="bp" name="bp" required>
+                    </div> -->
+                    <div class="form-group symptom-group">
+                        <label for="symptoms1">Symptom 1:</label>
+                        <input type="text" id="symptoms1" name="symptoms[]" required>
+                    </div>
+                    <div class="form-group symptom-group">
+                        <label for="symptoms2">Symptom 2:</label>
+                        <input type="text" id="symptoms2" name="symptoms[]" required>
+                    </div>
+                    <button type="button" id="add-symptom-btn">Add Symptom+</button>
+                    <button type="submit" id="submit-btn">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const homePageBtn = document.getElementById("homePageBtn");
+            const logoutBtn = document.getElementById("logout-btn");
+            const editNurseButton = document.getElementById("edit-nurse-btn");
+            const nurseInfoForm = document.getElementById("nurse-info-form");
+            const nurseInfoSection = document.getElementById("nurse-info-section");
+            const casePaperSection = document.getElementById("data-section");
+            const nurseInfoLink = document.getElementById("info-link");
+            const casePaperLink = document.getElementById("case-paper-link");
+            const casePaperForm = document.getElementById("case_paper");
+            const addSymptomBtn = document.getElementById("add-symptom-btn");
+            let symptomCount = 2;
+
+            // Redirect to home page
+            if (homePageBtn) {
+                homePageBtn.onclick = function () {
+                    window.location.href = "index.html"; // Replace with your actual home page URL
+                };
+            }
+
+            // Logout functionality
+            if (logoutBtn) {
+                logoutBtn.addEventListener("click", function () {
+                    localStorage.removeItem("authToken");
+                    sessionStorage.removeItem("authToken");
+                    window.location.href = "login.html"; // Redirect to login page
+                });
+            }
+
+            // Authentication Check
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                alert("Please Login Before Use. Redirecting to login.");
+                window.location.href = "login.html";
+            }
+
+            // Fetch and Populate Nurse Info
+            async function fetchNurseInfo() {
+                try {
+                    const response = await fetch("http://localhost:5011/api/nurse/getNurseInfo", {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("Failed to fetch nurse information");
+                    }
+
+                    const data = await response.json();
+                    document.getElementById("nurse-id-input").value = data.nurseID;
+                    document.getElementById("first-name").value = data.firstName;
+                    document.getElementById("surname").value = data.surname;
+                    document.getElementById("email").value = data.email;
+                    document.getElementById("phone").value = data.phone;
+                } catch (error) {
+                    console.error("Error fetching nurse information:", error);
+                    alert("Could not fetch nurse information. Please try again later.");
+                }
+            }
+
+            // Update Nurse Information
+            async function updateNurseInfo(event) {
+                event.preventDefault();
+
+                const updatedInfo = {
+                    firstName: document.getElementById("first-name").value,
+                    surname: document.getElementById("surname").value,
+                    email: document.getElementById("email").value,
+                    phone: document.getElementById("phone").value,
+                };
+
+                try {
+                    const response = await fetch("http://localhost:5011/api/nurse/nurse-info", {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(updatedInfo),
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("Failed to update nurse information");
+                    }
+
+                    alert("Nurse information updated successfully.");
+                    fetchNurseInfo(); // Refresh nurse info
+                } catch (error) {
+                    console.error("Error updating nurse information:", error);
+                    alert("Could not update nurse information. Please try again later.");
+                }
+            }
+
+            // Section toggling logic
+            function showSection(section) {
+                nurseInfoSection.style.display = "none";
+                casePaperSection.style.display = "none";
+                section.style.display = "block";
+            }
+
+            if (nurseInfoLink) {
+                nurseInfoLink.addEventListener("click", () => showSection(nurseInfoSection));
+            }
+            if (casePaperLink) {
+                casePaperLink.addEventListener("click", () => showSection(casePaperSection));
+            }
+
+            // Show Nurse Information section by default
+            showSection(nurseInfoSection);
+            fetchNurseInfo(); // Fetch nurse data on load
+
+            // Add new symptom input dynamically
+            if (addSymptomBtn && casePaperForm) {
+                addSymptomBtn.addEventListener("click", function () {
+                    if (symptomCount < 5) {
+                        symptomCount++;
+                        const symptomDiv = document.createElement("div");
+                        symptomDiv.classList.add("form-group", "symptom-group");
+                        symptomDiv.innerHTML = `
+                            <label for="symptoms${symptomCount}">Symptom ${symptomCount}:</label>
+                            <input type="text" id="symptoms${symptomCount}" name="symptoms[]" required>
+                        `;
+                        casePaperForm.insertBefore(symptomDiv, addSymptomBtn);
+                    } else {
+                        alert("You can add up to 5 symptoms only.");
+                    }
+                });
+            }
+
+
+    // Function to show popup with case paper details
+    function showPopup(casePaper, isError = false) {
+    const existingPopup = document.getElementById("case-paper-popup");
+    if (existingPopup) {
+        document.body.removeChild(existingPopup);
+    }
+
+    const overlay = document.createElement("div");
+    overlay.id = "popup-overlay";
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.background = "rgba(0, 0, 0, 0.3)"; // Semi-transparent overlay
+    overlay.style.backdropFilter = "blur(5px)"; // Background blur effect
+    overlay.style.zIndex = "999";
+
+    const popup = document.createElement("div");
+    popup.id = "case-paper-popup";
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.background = "rgba(255, 255, 255, 0.9)";
+    popup.style.padding = "20px";
+    popup.style.border = "2px solid #1F89e5";
+    popup.style.borderRadius = "20px"; // Rounded corners
+    popup.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.2)";
+    popup.style.zIndex = "1000";
+    popup.style.width = "400px";
+    popup.style.textAlign = "left";
+    popup.style.backgroundImage = "url('your-image-url.jpg')"; // Replace with actual image URL
+    popup.style.backgroundSize = "cover";
+    popup.style.backgroundPosition = "center";
+    popup.style.opacity = "0.9";
+
+    if (isError) {
+        popup.innerHTML = `
+            <h2 style="color: red; font-size: 20px;">Error</h2>
+            <p style="font-size: 18px; color: black;">${casePaper}</p>
+            <button id="close-popup" style="margin-top: 10px; padding: 5px 10px; background: red; color: #fff; border: none; cursor: pointer; display: block; margin: auto;">Close</button>
+        `;
+    } else {
+        popup.innerHTML = `
+            <h2 style="color: #1F89e5; font-size: 20px;">Case Paper Submitted</h2>
+            <p style="font-size: 18px; color: black;"><strong>Patient ID:</strong> ${casePaper.patientID || "N/A"}</p>
+            <p style="font-size: 18px; color: black;"><strong>Symptoms:</strong> ${casePaper.symptoms || "N/A"}</p>
+            <p style="font-size: 18px; color: black;"><strong>Disease:</strong> ${casePaper.disease || "N/A"}</p>
+            <p style="font-size: 18px; color: black;"><strong>Description:</strong> ${casePaper.description || "N/A"}</p>
+            <p style="font-size: 18px; color: black;"><strong>Precaution:</strong> ${casePaper.precaution || "N/A"}</p>
+            <p style="font-size: 18px; color: black;"><strong>Medication:</strong> ${casePaper.medication || "N/A"}</p>
+            <p style="font-size: 18px; color: black;"><strong>Diet:</strong> ${casePaper.diet || "N/A"}</p>
+               <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px;">
+        <button id="close-popup" 
+            style="width: 120px; padding: 10px; background: #1F89e5; color: #fff; border: none; cursor: pointer; border-radius: 10px;">
+            Close
+        </button>
+        <button id="print-popup" 
+            style="width: 120px; padding: 10px; background: #1F89e5; color: #fff; border: none; cursor: pointer; border-radius: 10px;">
+            Print
+        </button>
+    </div>
+`;
+    }
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(popup);
+
+    document.getElementById("close-popup").addEventListener("click", function () {
+        document.body.removeChild(popup);
+        document.body.removeChild(overlay);
+    });
+}
+
+// Handle Case Paper Submission
+if (casePaperForm) {
+    casePaperForm.addEventListener("submit", async function (event) {
+        event.preventDefault();
+
+        const patientID = document.getElementById("patientID").value;
+        const symptoms = Array.from(document.querySelectorAll('input[name="symptoms[]"]'))
+            .map(input => input.value.trim())
+            .filter(value => value !== "");
+
+        const requestBody = { patientID, symptoms };
+
+        try {
+            const response = await fetch("http://localhost:5011/api/nurse/casepaper1", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            const result = await response.json();
+            if (response.ok && result.casePaper) {
+                showPopup(result.casePaper);
+                casePaperForm.reset();
+            } else {
+                showPopup(result.message || "Unknown error occurred.", true);
+            }
+        } catch (error) {
+            showPopup("Failed to submit case paper. Please try again later.", true);
+            console.error("Error:", error);
+        }
+    });
+}
+
+            // Attach event listener to edit button
+            if (editNurseButton) {
+                editNurseButton.addEventListener("click", updateNurseInfo);
+            }
+        });
+    </script>
+
+</body>
+
+</html>
