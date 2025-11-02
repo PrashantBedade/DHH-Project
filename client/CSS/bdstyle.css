@@ -1,0 +1,79 @@
+/* General body styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+    text-align: center;
+    background: url(../assets/backgroundslide2.jpg)center/cover;
+    object-fit:contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+/* Page title */
+h2 {
+    color: #ff0000;
+    font-size: 2.5rem;
+    margin: 20px 0;
+}
+
+/* Blood card container */
+.blood-card {
+    background-color: #fff;
+    background-color: #f3cece;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 10, 0.1);
+    margin: 20px auto;
+    max-width: 400px;
+    height: 350px;
+    padding: 20px;
+    position: relative;
+    text-align: left;
+    border: 1px solid #ddd;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.blood-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 20, 2);
+}
+
+/* Card headings */
+.blood-card h3 {
+    font-size: 1.8rem;
+    color: #d9534f; /* Red to represent blood */
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Card paragraphs */
+.blood-info p {
+    font-size: 1rem;
+    color: #555;
+    margin: 10px 0;
+}
+
+.blood-info p strong {
+    color: #333;
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .blood-card {
+        max-width: 90%;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+}

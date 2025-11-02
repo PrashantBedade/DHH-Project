@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/bdstyle.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <title>Blood Types</title>
+    <style>
+        .home-page-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            position: fixed;
+            display: block;
+            z-index: 1;
+            left: 10px;
+            top: 5px;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .home-page-btn {
+            background-color: #48bb78;
+        }
+
+        .home-page-btn:hover {
+            background-color: #38a169;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="homePageBtn" class="home-page-btn">Back <i class="fa fa-home" aria-hidden="true"></i></button>
+
+    <h2>Blood Types and There Information</h2>
+    <div class="container">
+
+    <div class="blood-card" id="O-negative">
+        <h3>O<sup>-ve</sup> (O Negative)</h3>
+        <div class="blood-info">
+            <p><strong>Can Recieve From: </strong> O<sup>-ve</sup><p>
+            <p><strong>Reason for Compatibility:</strong>Universal donor for all blood types.
+                No A/B antigens and no Rh antigen, making it compatible with any blood type.</p>
+            <p><strong>Can Donate To: </strong> O<sup>-ve</sup>, O<sup>+ve</sup>, A<sup>-ve</sup>, A<sup>+ve</sup>,
+                B<sup>-ve</sup>, B<sup>+ve</sup>, AB<sup>-ve</sup>, AB<sup>+ve</sup>
+            </p>
+        </div>
+    </div>
+
+    <div class="blood-card" id="O-positive">
+        <h3>O<sup>+ve</sup> (O Positive)</h3>
+        <div class="blood-info">
+            <p><strong>Can Receive From:</strong> O<sup>-ve</sup>, O<sup>+ve</sup></p>
+            <p><strong>Reason for Compatibility:</strong> No A/B antigens but has Rh+; can donate to
+                Rh+ types and receive from O types.</p>
+            <p><strong>Can Donate To:</strong> O<sup>+ve</sup>, A<sup>+ve</sup>, B<sup>+ve</sup>, AB<sup>+ve</sup> </p>
+        </div>
+    </div>
+
+    <div class="blood-card" id="A-negative">
+        <h3>A<sup>-ve</sup> (A Negative)</h3>
+        <div class="blood-info">
+            <p><strong>Can Receive From:</strong> A<sup>-ve</sup>, O<sup>-ve</sup></p>
+            <p><strong>Reason for Compatibility:</strong> Has A antigen and no Rh antigen; can donate to A and AB types,
+                but only receives Rh- negative A or O blood.
+            </p>
+            <p><strong>Can Donate To:</strong> A<sup>-ve</sup>, A<sup>+ve</sup>, AB<sup>-ve</sup>, AB<sup>+ve</sup>
+            </p>
+        </div>
+    </div>
+
+    <div class="blood-card" id="A-positive">
+        <h3>A<sup>+ve</sup> (A Positibe)</h3>
+        <div class="blood-info">
+            <p><strong>Can Receive From:</strong> A<sup>-ve</sup>, A<sup>+ve</sup>, O<sup>-ve</sup>, O<sup>+ve</sup>
+            </p>
+            <p><strong>Reason for Compatibility:</strong> Has A antigen and Rh+; can donate to
+                Rh+ A and AB types, but can receive both Rh+ and Rh- A or O blood.</p>
+            <p><strong>Can Donate To:</strong> A<sup>+ve</sup>, AB<sup>+ve</sup></p>
+        </div>
+    </div>
+
+    <div class="blood-card" id="B-negative">
+        <h3>B<sup>-ve</sup> (B Negative)</h3>
+        <div class="blood-info">
+            <p><strong>Can Receive From:</strong> B<sup>-ve</sup>, O<sup>-ve</sup></p>
+            <p><strong>Can Donate To:</strong> B<sup>-ve</sup>, B<sup>+ve</sup>, AB<sup>-ve</sup>, AB<sup>+ve</sup>
+            </p>
+            <p><strong>Reason for Compatibility:</strong>Has B antigen and no Rh antigen; can donate to B and AB types,
+                but only receives Rh- negative B or O blood.
+            </p>
+        </div>
+    </div>
+    <div class="blood-card" id="B-positive">
+        <h3>B<sup>+ve</sup> (B Positive)</h3>
+        <div class="blood-info">
+            <p><strong>Can Receive From:</strong> B<sup>-ve</sup>, B<sup>+ve</sup>, O<sup>-ve</sup>, O<sup>+ve</sup>
+            </p>
+            <p><strong>Can Donate To:</strong> B<sup>+ve</sup>, AB<sup>+ve</sup></p>
+            <p><strong>Reason for Compatibility:</strong>Has B antigen and Rh+; can donate to
+                Rh+ B and AB types, but can receive both Rh+ and Rh- B or O blood.</p>
+        </div>
+    </div>
+
+    <div class="blood-card" id="AB-negative">
+        <h3>AB<sup>-ve</sup> (AB Negative)</h3>
+        <div class="blood-info">
+            <p><strong>Can Receive From:</strong> AB<sup>-ve</sup>, A<sup>-ve</sup>, B<sup>-ve</sup>, O<sup>-ve</sup>
+            </p>
+            <p><strong>Can Donate To:</strong> AB<sup>-ve</sup>, AB<sup>+ve</sup></p>
+            <p><strong>Reason for Compatibility:</strong>Universal donor for AB blood types, but can only receive from
+                Rh- negative types (A<sup>-ve</sup>, B<sup>-ve</sup>, AB<sup>-ve</sup>, O<sup>-ve</sup>).</p>
+        </div>
+    </div>
+
+    <div class="blood-card" id="AB-positive">
+        <h3>AB<sup>+ve</sup> (AB Positive)</h3>
+        <div class="blood-info">
+            <p><strong>Can Receive From:</strong> All blood types (O<sup>-ve</sup>, O<sup>+ve</sup>, A<sup>-ve</sup>,
+                A<sup>+ve</sup>, B<sup>-ve</sup>,
+                B<sup>+ve</sup>, AB<sup>-ve</sup>, AB<sup>+ve</sup>)</p>
+            <p><strong>Can Donate To:</strong> AB<sup>+ve</sup></p>
+            <p><strong>Reason for Compatibility:</strong>Universal recipient; can receive from any blood type due to the
+                presence of both A/B antigens and Rh+</p>
+        </div>
+    </div>
+    </div>
+    <div id="footer"></div>
+
+    <script>
+        document.getElementById("homePageBtn").onclick = function() {
+        window.location.href = "index.html"; // Replace 'index.html' with your homepage URL
+    };
+
+        // Load footer content dynamically
+        fetch("./footer.html")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to load footer");
+                }
+                return response.text();
+            })
+            .then(data => {
+                document.getElementById("footer").innerHTML = data;
+            })
+            .catch(err => console.error("Error loading footer:", err));
+    </script>
+    
+</body>
+
+</html>

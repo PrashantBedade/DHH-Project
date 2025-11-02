@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receptionist Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 90vh;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            background-color: #333;
+            color: #fff;
+            width: 200px;
+            min-height: 85vh;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 35px 0;
+            cursor: pointer;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .form-section {
+            display: none;
+            font-size: 32px;
+            padding: 10px;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        form input {
+            display: block;
+            margin: 10px 0;
+            padding: 8px;
+            width: 10%;
+            box-sizing: border-box;
+        }
+
+        form button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #218838;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .dashboard {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 95vh;
+            ;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: orange;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: white;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #384d63;
+        }
+
+        .main {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #ecf0f1;
+        }
+
+        .form-section,
+        .table-section {
+            display: none;
+        }
+
+        .form-section.active,
+        .table-section.active {
+            display: block;
+        }
+
+        .form-section input,
+        .form-section select {
+            margin: 10px auto;
+            padding: 10px;
+            width: 50%;
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 80%;
+            font-size: 18px;
+            box-shadow: 2px 2px 5px black;
+        }
+
+        .form-section button {
+            padding: 10px 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%;
+            box-shadow: 2px 2px 5px #16456f;
+        }
+
+        .form-section input:hover,
+        .form-section select:hover{
+            box-shadow: 2px 2px 5px #1f89e5;
+        }
+
+        .table-section-inside {
+    width: 100%;
+    height: 700px;
+    overflow-y: auto; /* Makes the container scrollable */
+    border: 1px solid #ccc; /* Optional: adds a border around the container */
+}
+        .resource-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow-y: scroll;
+            height: 800px;
+        }
+
+        .resource-table th,
+        .resource-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .resource-table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        .action-btn {
+            background-color: orange;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background-color: #e67e22;
+        }
+
+        .logout-btn,
+        .home-page-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .home-page-btn {
+            background-color: #48bb78;
+        }
+
+        .home-page-btn:hover {
+            background-color: #38a169;
+        }
+
+        #Edit-resourse-btn {
+            background-color: #1f89e5;
+            color: #fff;
+            font-size: 20px;
+            padding: 5px 10px;
+            display: block;
+            margin: auto;
+            border-radius: 10px;
+            border: none;
+        }
+
+        #edit-receptionist, #add-btn {
+            background-color: #1f89e5;
+            width: 30%;
+            margin: auto;
+            display: block;
+            font-size: 18px;
+        }
+
+        #edit-receptionist:hover,
+        #add-btn:hover{
+            background-color: #1b78ca;
+        }
+
+        #receptionist-info-form {
+            /* border: 2px solid #1f89e5; */
+            width: 50%;
+            margin: auto;
+            background-color: #f1f1f1;
+            padding: 20px;
+            font-size: 20px;
+            border-radius: 20px;
+        }
+        #add-resource-form{
+            width: 50%;
+            padding: 20px;
+            margin: auto;
+            background-color: #f1f1f1;
+            font-size: 20px;
+            border-radius: 20px;
+        }
+        .btn{
+            width: 20%;
+            background-color: #1b78ca;
+        }
+    </style>
+</head>
+
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2 id="pd">Receptionist Dashboard</h2>
+        <ul>
+            <li id="receptionist-info-link">Receptionist Information</li>
+            <li id="view-resources-link">View Resources</li>
+            <li id="add-resources-link">Add Resource</li>
+        </ul>
+        <button id="logout-btn" class="logout-btn">Logout</button>
+        <button id="homePageBtn" class="home-page-btn">Homepage</button>
+
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Receptionist Information -->
+        <div id="receptionist-info-section" class="form-section active">
+            <h3 style="text-align: center;">Receptionist Information</h3>
+            <form id="receptionist-info-form">
+                <input type="text" id="receptionistID" placeholder="Receptionist ID" disabled>
+                <input type="text" id="firstName" placeholder="First Name">
+                <input type="text" id="surname" placeholder="Surname">
+                <input type="email" id="email" placeholder="Email">
+                <input type="text" id="phone" placeholder="Phone Number">
+                <button type="button" id="edit-receptionist">Save Changes</button>
+            </form>
+        </div>
+
+
+
+        <!-- View Resources -->
+        <div id="view-resources-section" class="table-section">
+            <h3>View Resources</h3>
+            <div class="table-section-inside">
+            <table class="resource-table">
+                <thead>
+                    <tr>
+                        <th>Resource ID</th>
+                        <th>Resource Type</th>
+                        <th>Category</th>
+                        <th>Total</th>
+                        <th>Available</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Resource rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </div></div>
+
+
+        <!-- Add Resource -->
+        <div id="add-resource-section" class="form-section">
+            <h3>Add Resource</h3>
+            <form id="add-resource-form">
+                <input type="text" id="resourceType" placeholder="Resource Type" required>
+                <input type="text" id="category" placeholder="Category" required>
+                <input type="number" id="total" placeholder="Total" min="0" required>
+                <input type="number" id="available" placeholder="Available" min="0" required>
+                <button id="add-btn" type="submit">Add Resource</button>
+            </form>
+        </div>
+
+
+    </main>
+</div>
+
+<script>
+    const apiBaseUrl = "http://localhost:5011/api/receptionist";
+
+    // Sidebar Navigation
+    document.getElementById("homePageBtn").onclick = function () {
+        window.location.href = "index.html";
+    };
+
+    document.getElementById("logout-btn").addEventListener("click", function () {
+        localStorage.removeItem("authToken");
+        sessionStorage.removeItem("authToken");
+        window.location.href = "login.html";
+    });
+
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+        alert("Please Login Before Use. Redirecting to login.");
+        window.location.href = "login.html";
+    }
+
+    // Sections
+    const receptionistInfoSection = document.getElementById("receptionist-info-section");
+    const viewResourcesSection = document.getElementById("view-resources-section");
+    const addResourceSection = document.getElementById("add-resource-section");
+
+    // Navigation Links
+    document.getElementById("receptionist-info-link").addEventListener("click", () => {
+        showSection(receptionistInfoSection);
+    });
+    document.getElementById("view-resources-link").addEventListener("click", () => {
+        showSection(viewResourcesSection);
+    });
+    document.getElementById("add-resources-link").addEventListener("click", () => {
+        showSection(addResourceSection);
+    });
+
+    // Show active section
+    function showSection(section) {
+        receptionistInfoSection.classList.remove("active");
+        viewResourcesSection.classList.remove("active");
+        addResourceSection.classList.remove("active");
+        section.classList.add("active");
+    }
+
+    // Fetch Receptionist Info
+    const receptionistIDField = document.getElementById("receptionistID");
+    const firstNameField = document.getElementById("firstName");
+    const surnameField = document.getElementById("surname");
+    const emailField = document.getElementById("email");
+    const phoneField = document.getElementById("phone");
+    const editButton = document.getElementById("edit-receptionist");
+
+    async function fetchReceptionistInfo() {
+        try {
+            const response = await fetch(`${apiBaseUrl}/get-receptionist`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) throw new Error("Failed to fetch receptionist information.");
+
+            const receptionist = await response.json();
+            receptionistIDField.value = receptionist.receptionistID;
+            firstNameField.value = receptionist.firstName;
+            surnameField.value = receptionist.surname;
+            emailField.value = receptionist.email;
+            phoneField.value = receptionist.phone;
+        } catch (error) {
+            console.error(error);
+            alert("Error fetching receptionist information.");
+        }
+    }
+
+    // Update Receptionist Info
+    async function updateReceptionistInfo() {
+        const data = {
+            firstName: firstNameField.value,
+            surname: surnameField.value,
+            email: emailField.value,
+            phone: phoneField.value,
+        };
+
+        try {
+            const response = await fetch(`${apiBaseUrl}/update-receptionist`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (!response.ok) throw new Error("Failed to update receptionist information.");
+
+            alert("Receptionist information updated successfully.");
+        } catch (error) {
+            console.error(error);
+            alert("Error updating receptionist information.");
+        }
+    }
+
+    editButton.addEventListener("click", (e) => {
+        e.preventDefault();
+        updateReceptionistInfo();
+    });
+
+    const apiBase = "http://localhost:5011/api/resources";
+
+    // Fetch and display resources
+    async function fetchResources() {
+        try {
+            const response = await fetch(`${apiBase}/get-resources`);
+            if (!response.ok) throw new Error("Failed to fetch resources");
+
+            const resources = await response.json();
+            const tableBody = document.querySelector(".resource-table tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+
+            resources.forEach((resource) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                <td>${resource.resourceID}</td>
+                <td>${resource.resourceType}</td>
+                <td>${resource.category}</td>
+                <td>
+                    <input type="number" class="resource-edit" value="${resource.total}" data-field="total" data-id="${resource.resourceID}" />
+                </td>
+                <td>
+                    <input type="number" class="resource-edit" value="${resource.available}" data-field="available" data-id="${resource.resourceID}" />
+                </td>
+                <td>
+                    <button id="Edit-resourse-btn" onclick="updateResource(${resource.resourceID})">Edit</button>
+                </td>
+            `;
+                tableBody.appendChild(row);
+            });
+
+            // Add event listeners for editing inputs
+            document.querySelectorAll('.resource-edit').forEach(input => {
+                input.addEventListener('change', (event) => {
+                    const resourceID = event.target.dataset.id;
+                    const field = event.target.dataset.field;
+                    const value = event.target.value;
+
+                    // Update resource directly in the backend
+                    updateResource(resourceID, field, value);
+                });
+            });
+
+        } catch (error) {
+            console.error(error.message);
+            alert("Error fetching resources.");
+        }
+    }
+    // Update resource details (called when the 'Read' button is clicked or the input is changed)
+    async function updateResource(resourceID, field = null, value = null) {
+        const totalField = document.querySelector(`input[data-id="${resourceID}"][data-field="total"]`);
+        const availableField = document.querySelector(`input[data-id="${resourceID}"][data-field="available"]`);
+
+        const newTotal = totalField ? totalField.value : null;
+        const newAvailable = availableField ? availableField.value : null;
+
+        if (field && value !== null) {
+            if (field === 'total') {
+                totalField.value = value;
+            } else if (field === 'available') {
+                availableField.value = value;
+            }
+        }
+
+        try {
+            const response = await fetch(`http://localhost:5011/api/resources/${resourceID}`, {  // Update this URL
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ total: newTotal, available: newAvailable }),
+            });
+
+            if (!response.ok) throw new Error("Failed to update resource");
+
+            alert("Resource updated successfully!");
+            fetchResources(); // Refresh the resource list
+        } catch (error) {
+            console.error(error.message);
+            alert("Error updating resource.");
+        }
+    }
+
+    // Add event listener only once when the DOM content is loaded
+    document.addEventListener("DOMContentLoaded", () => {
+        const addResourceForm = document.getElementById("add-resource-form");
+        addResourceForm.addEventListener("submit", addResource);
+    });
+
+    // Add new resource
+    async function addResource(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const resourceType = document.getElementById("resourceType").value.trim();
+        const category = document.getElementById("category").value.trim();
+        const total = parseInt(document.getElementById("total").value, 10);
+        const available = parseInt(document.getElementById("available").value, 10);
+
+        if (!resourceType || !category || isNaN(total) || isNaN(available)) {
+            alert("All fields are required!");
+            return;
+        }
+
+        if (available > total) {
+            alert("Available quantity cannot exceed total quantity!");
+            return;
+        }
+
+        try {
+            const response = await fetch("http://localhost:5011/api/resources/add-resources", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ resourceType, category, total, available }),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Failed to add resource");
+            }
+
+            alert("Resource added successfully!");
+            fetchResources(); // Call your function to refresh the resource list
+            document.getElementById("add-resource-form").reset();
+        } catch (error) {
+            console.error(error.message);
+            alert("Error adding resource. Please try again.");
+        }
+    }
+
+    // Show update form
+    function showUpdateForm(id, total, available) {
+        const newTotal = prompt("Enter new total quantity:", total);
+        const newAvailable = prompt("Enter new available quantity:", available);
+
+        if (newTotal !== null && newAvailable !== null) {
+            updateResource(id, newTotal, newAvailable);
+        }
+    }
+
+    // Add event listener to the form
+    document.getElementById("add-resource-form").addEventListener("submit", addResource);
+
+    // Fetch resources on page load
+    document.addEventListener("DOMContentLoaded", fetchResources);
+
+    // Load receptionist info on page load
+    document.addEventListener("DOMContentLoaded", fetchReceptionistInfo);
+
+</script>
+</body>
+
+</html>

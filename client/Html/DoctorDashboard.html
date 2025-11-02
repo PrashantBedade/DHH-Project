@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <style>
+        /* Base styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #f4f8fb;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .data-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .data-section label {
+            font-weight: bold;
+            margin: 10px;
+        }
+
+        .data-section input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 90%;
+            box-sizing: border-box;
+            margin: 10px;
+        }
+
+        /* Toggle Buttons */
+        .availability-radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .availability-radio-group input {
+            margin-right: 10px;
+        }
+
+        #availability-status {
+            font-weight: bold;
+            color: #dc3545;
+            /* Red for unavailable */
+        }
+
+        /* Dashboard container */
+        .dashboard {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 260px;
+            background-color: #2a3f54;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #5bc0de;
+            font-size: 22px;
+        }
+
+        .sidebar a,
+        .sidebar span {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            display: block;
+        }
+
+        .sidebar a:hover,
+        .sidebar span:hover {
+            background-color: #1e2b38;
+        }
+
+        /* Main content styling */
+        .main {
+            flex-grow: 1;
+            padding: 30px;
+            background-color: #f4f8fb;
+            overflow-y: auto;
+        }
+
+        .main h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #2a3f54;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #5bc0de;
+            color: white;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .accept-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* Sidebar link active state */
+        .sidebar a.active {
+            background-color: #5bc0de;
+        }
+
+        .btn {
+            margin: 10px auto;
+            display: flex;
+            background-color: #1F89E5;
+            font-size: 18px;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .logout-btn,
+        .home-page-btn {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .home-page-btn {
+            background-color: #48bb78;
+        }
+
+        .home-page-btn:hover {
+            background-color: #38a169;
+        }
+
+        #appointments {
+            height: auto;
+            border: 1px solid #ccc;
+            /* Optional */
+            padding: 10px;
+            /* Optional */
+        }
+
+        #appointments table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #appointments thead {
+            position: sticky;
+            top: 0;
+            background: white;
+            /* Ensures header stays visible while scrolling */
+            z-index: 10;
+        }
+
+        #appointments tbody {
+            display: block;
+            max-height: 450px;
+            /* Adjust height to fit within parent */
+            overflow-y: scroll;
+            width: 100%;
+        }
+
+        #appointments tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            /* Ensures proper column width distribution */
+        }
+
+        #appointments th,
+        #appointments td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+        #accepted-appointments {
+            height: auto;
+            border: 1px solid #ccc;
+            /* Optional */
+            padding: 10px;
+            /* Optional */
+        }
+
+        #accepted-appointments table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #accepted-appointments thead {
+            position: sticky;
+            top: 0;
+            background: white;
+            /* Ensures header stays visible while scrolling */
+            z-index: 10;
+        }
+
+        #accepted-appointments tbody {
+            display: block;
+            max-height: 500px;
+            width: 500px;
+            /* Adjust height to fit within parent */
+            overflow-y: scroll;
+        }
+
+        #accepted-appointments tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+            /* Ensures proper column width distribution */
+        }
+
+        #accepted-appointments th,
+        #accepted-appointments td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2>Doctor Dashboard</h2>
+            <span id="doctor_ID">Doctor ID:</span>
+            <input type="text" id="doctorID" name="doctorID" disabled style="color: #000000;" />
+
+            <a href="#" id="info-link" class="active">Information</a>
+            <a href="#" id="appointments-link">Appointments</a>
+            <a href="#" id="accepted-appointments-link">Appointments History</a>
+
+            <button id="logout-btn" class="logout-btn">Logout</button>
+            <button id="homePageBtn" class="home-page-btn">Homepage</button>
+
+        </div>
+        <div class="main">
+            <h1>Welcome</h1>
+
+            <!-- Doctor Information Section -->
+            <div class="data-section" id="doctor-info">
+                <h3>Doctor Information</h3>
+
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" placeholder="Doctor Name" />
+
+                <label for="surname">Surname:</label>
+                <input type="text" id="surname" placeholder="Doctor Name" />
+
+                <label for="licenseNo">License No:</label>
+                <input type="text" id="licenseNo" placeholder="Specialty" />
+
+                <label for="specialization">Specialization:</label>
+                <input type="text" id="specialization" placeholder="Specialty" />
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Email" />
+
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" placeholder="Phone" />
+
+                <label>Availability:</label>
+                <div class="availability-radio-group">
+                    <label for="available">
+                        <input type="radio" name="availability" id="available" value="available"> Available
+                    </label>
+                    <label for="unavailable">
+                        <input type="radio" name="availability" id="unavailable" value="unavailable"> Unavailable
+                    </label>
+                </div>
+                <span id="availability-status">Unavailable</span>
+
+                <!-- Edit Information Button -->
+                <button class="btn" id="edit-info-btn">Edit Information</button>
+            </div>
+
+            <!-- Future Appointments Section -->
+            <div class="data-section" id="appointments">
+                <h3>Future Appointments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Patient Name</th>
+                            <th>Appointment Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Appointments data will be dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Appointment History Section -->
+            <div class="data-section" id="accepted-appointments">
+                <h3>Appointments History</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient ID</th>
+                            <th>Patient Name</th>
+                            <th>Appointment Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Appointment history data will be dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        document.getElementById("homePageBtn").onclick = function () {
+            window.location.href = "index.html"; // Replace 'index.html' with your homepage URL
+        };
+
+        document.getElementById('logout-btn').addEventListener('click', function () {
+            // Remove user session data from localStorage or sessionStorage
+            localStorage.removeItem('authToken');  // Example using localStorage, change as per your implementation
+            sessionStorage.removeItem('authToken'); // If you use sessionStorage
+
+            // Redirect to the login page after logout
+            window.location.href = 'login.html'; // Replace with the actual login page URL
+        });
+
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            alert('Please Login Before Use. Redirecting to login.');
+            window.location.href = 'login.html';
+        }
+
+        // Fetch doctor information from the API
+        function fetchDoctorData() {
+            fetch('http://localhost:5011/api/doctors/get-doctor-details', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        return;
+                    }
+
+                    const doctor = data.doctor;
+                    document.getElementById('doctorID').value = doctor.doctorID;
+                    document.getElementById('firstName').value = doctor.firstName;
+                    document.getElementById('surname').value = doctor.surname;
+                    document.getElementById('licenseNo').value = doctor.licenseNo;
+                    document.getElementById('specialization').value = doctor.specialization || 'Not Specified';
+                    document.getElementById('email').value = doctor.email;
+                    document.getElementById('phone').value = doctor.phone;
+
+                    const availabilityRadio = document.getElementById(doctor.available ? "available" : "unavailable");
+                    availabilityRadio.checked = true;
+                    document.getElementById("availability-status").innerText = doctor.available ? "Available" : "Unavailable";
+                    document.getElementById("availability-status").style.color = doctor.available ? "#28a745" : "#dc3545";
+                })
+                .catch(error => console.error('Error fetching doctor data:', error));
+        }
+
+        // Handle availability toggle using radio buttons
+        const availabilityRadios = document.querySelectorAll('input[name="availability"]');
+        availabilityRadios.forEach(radio => {
+            radio.addEventListener('change', (event) => {
+                const isAvailable = event.target.value === "available";
+                document.getElementById("availability-status").innerText = isAvailable ? "Available" : "Unavailable";
+                document.getElementById("availability-status").style.color = isAvailable ? "#28a745" : "#dc3545";
+            });
+        });
+
+        // Edit doctor information (save changes)
+        document.getElementById('edit-info-btn').addEventListener('click', async () => {
+            const firstName = document.getElementById('firstName').value;
+            const surname = document.getElementById('surname').value;
+            const licenseNo = document.getElementById('licenseNo').value;
+            const specialization = document.getElementById('specialization').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const available = document.getElementById('available').checked;
+
+            const updatedDoctorData = {
+                firstName,
+                surname,
+                licenseNo,
+                specialization,
+                email,
+                phone,
+                available,
+            };
+
+            try {
+                const response = await fetch('http://localhost:5011/api/doctors/update-doctor-details', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    body: JSON.stringify(updatedDoctorData),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert('Doctor information updated successfully!');
+                } else {
+                    console.error('Failed to update doctor:', data);
+                    alert(data.message || 'An error occurred while updating doctor details.');
+                }
+            } catch (error) {
+                console.error('Error updating doctor data:', error);
+                alert('Error updating doctor details.');
+            }
+        });
+
+        // Fetch future appointments
+        function fetchFutureAppointments() {
+            fetch('http://localhost:5011/api/doctors/future-appointments', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('API Response:', data); // Log the response for debugging
+                    if (data && data.appointments) {
+                        const appointmentsTable = document.querySelector('#appointments tbody');
+                        appointmentsTable.innerHTML = ''; // Clear existing rows
+                        data.appointments.forEach(appointment => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                    <td>${appointment.patientID}</td>
+                    <td>${appointment.name}</td>
+                    <td>${appointment.date}</td>
+                    <td>${appointment.time}</td>
+                `;
+                            appointmentsTable.appendChild(row);
+                        });
+                    } else {
+                        console.error('Appointments data is missing or undefined:', data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching future appointments:', error);
+                });
+        }
+
+        // Fetch appointment history
+        // Fetch past appointments (appointment history)
+        function fetchAppointmentHistory() {
+            fetch('http://localhost:5011/api/doctors/appointment-history', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const acceptedAppointmentsTable = document.querySelector('#accepted-appointments tbody');
+                    acceptedAppointmentsTable.innerHTML = ''; // Clear existing rows
+                    data.appointments.forEach(appointment => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                    <td>${appointment.patientID}</td>
+                    <td>${appointment.name}</td>
+                    <td>${appointment.date}</td>
+                    <td>${appointment.time}</td>
+                `;
+                        acceptedAppointmentsTable.appendChild(row);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching appointment history:', error);
+                    alert('Error fetching appointment history.');
+                });
+        }
+        // Sidebar link click event to show the corresponding section
+        function switchSection(linkId, sectionToShow) {
+            // Hide all sections
+            document.getElementById('doctor-info').style.display = 'none';
+            document.getElementById('appointments').style.display = 'none';
+            document.getElementById('accepted-appointments').style.display = 'none';
+
+            // Show the selected section
+            sectionToShow.style.display = 'block';
+
+            // Remove 'active' class from all sidebar links
+            const sidebarLinks = document.querySelectorAll('.sidebar a');
+            sidebarLinks.forEach(link => link.classList.remove('active'));
+
+            // Add 'active' class to the clicked link
+            const activeLink = document.getElementById(linkId);
+            activeLink.classList.add('active');
+        }
+
+        document.getElementById("info-link").addEventListener("click", () => {
+            switchSection("info-link", document.getElementById("doctor-info"));
+        });
+
+        document.getElementById("appointments-link").addEventListener("click", () => {
+            switchSection("appointments-link", document.getElementById("appointments"));
+        });
+
+        document.getElementById("accepted-appointments-link").addEventListener("click", () => {
+            switchSection("accepted-appointments-link", document.getElementById("accepted-appointments"));
+        });
+
+        // Display the "Information" section by default
+        switchSection("info-link", document.getElementById("doctor-info"));
+
+        // Fetch doctor data and appointments
+        fetchDoctorData();
+        fetchFutureAppointments();
+        fetchAppointmentHistory();
+    </script>
+</body>
+
+</html>

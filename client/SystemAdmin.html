@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Admin Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="bg-white p-8 rounded shadow-lg w-96">
+        <h1 class="text-xl font-semibold text-center mb-6">System Admin Login</h1>
+        <form id="loginForm" action="POST">
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                <input type="text" id="username" name="username" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-6">
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" required class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded">Login</button>
+        </form>
+    </div>
+
+    <script>
+        function decodeJWT(token) {
+            try {
+                const payload = token.split('.')[1];
+                return JSON.parse(atob(payload));
+            } catch (error) {
+                console.error('Failed to decode token:', error);
+                return null;
+            }
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Create the data object with username and password
+            const data = { username, password };
+
+            try {
+                // Send the data in the POST request body to the backend login route
+
+                const response = await fetch('http://localhost:5011/api/systemadmin/system-Admin/protected', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+
+                const result = await response.json();
+                if (response.ok && result.token) {
+                    // Save the token in cookies
+                    document.cookie = `authToken=${result.token}; path=/; secure`;
+                    // After successful login
+localStorage.setItem('authToken', result.token);  // Store the token in localStorage
+
+                    // Decode and log the payload of the token
+                    const decodedPayload = decodeJWT(result.token);
+                    console.log('Decoded Token Payload:', decodedPayload);
+
+                    // Show an alert with the token
+                    alert(`Login successful! Token: ${result.token}`);
+
+                    // Redirect to the next page
+                    window.location.href = 'systemAdminOperation.html';
+                } else {
+                    alert(result.error || 'Login failed');
+                }
+
+            } catch (error) {
+                console.error('Error logging in:', error);
+                alert('An error occurred. Please try again later.');
+            }
+        });
+    </script>
+</body>
+
+</html>

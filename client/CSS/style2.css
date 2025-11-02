@@ -1,0 +1,103 @@
+/* General Styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.mainbody {
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: #f9f9f9;
+    border: 2px solid black;
+    border-radius: 20px;
+    box-shadow: inset -10px -10px 10px rgba(0, 0, 0, 0.4), inset 10px 10px 10px rgba(0, 0, 0, 0.4);
+    padding: 30px;
+}
+
+.maincontentleft {
+    width: 40%;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+.maincontentleft img {
+    width: 200px;
+    height: auto;
+    border-radius: 100%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.maincontentleft img:hover {
+    box-shadow: 10px 10px 12px black;
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+.maintextinfo h2 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 15px;
+}
+
+.maintextinfo p {
+    font-size: 18px;
+    color: #666666;
+    line-height: 1.5;
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+.mainbodybtn button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-weight: bold;
+    background-color: #1F89E5;
+    color: #fff;
+    border: 2px solid black;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.mainbodybtn button:hover {
+    background-color: #000;
+    border: 2px solid #1F89E5;
+    box-shadow: 2px 2px 3px black;
+}
+
+.maincontentright {
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.maincontentright img {
+    width: 100%;
+    max-width: 500px;
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+.maincontentright img:hover {
+    transform: scale(1.1);
+    filter: drop-shadow(20px 10px 10px black);
+}
+
+/* Heartbeat Animation */
+@keyframes heartbeat {
+    0%, 100% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.2);
+    }
+    60% {
+        transform: scale(1);
+    }
+}

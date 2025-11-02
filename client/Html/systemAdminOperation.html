@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        body {
+            /* background: url("../assets/backgroundslide2.jpg")no-repeat center center/cover;*/
+            background-color: #90bfc9
+        }
+
+        .add-pharmacy {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 20px;
+            color: #000000;
+        }
+
+        #addBloodBankForm {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+        }
+
+        #addPathologyForm {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+        }
+
+        #addHospitalAdminForm {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+        }
+
+        button:hover {
+            background-color: rgb(154, 232, 18);
+            color: #000000;
+            font-weight: bold;
+            box-shadow: 2px 2px 2px black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="max-w-7xl mx-auto p-6">
+        <h1 class="text-5xl font-bold text-center mb-9" style="color: #1F89E5;">System Admin Dashboard</h1>
+
+        <!-- Add Pharmacy Form -->
+        <h2 class="text-xl font-bold mb-4">Add Pharmacy</h2>
+        <form class="add-pharmacy" id="addPharmacyForm">
+            <div class="mb-4">
+                <label for="pharmacy_id" class="block text-md font-medium text-gray-900">Pharmacy ID</label>
+                <input type="text" id="pharmacy_id" name="pharmacy_id" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4" id="add-pharmacy">
+                <label for="pharmacyName" class="block text-md font-medium text-gray-900">Pharmacy Name</label>
+                <input type="text" id="pharmacy_name" name="pharmacy_name" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-md font-medium text-gray-900">Address</label>
+                <input type="text" id="address" name="address" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="ownerName" class="block text-md font-medium text-gray-900">Owner Name</label>
+                <input type="text" id="owner_name" name="owner_name" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="licenseNo" class="block text-md font-medium text-gray-900">License No</label>
+                <input type="text" id="license_no" name="license_no" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="phoneNo" class="block text-md font-medium text-gray-900">Phone No</label>
+                <input type="text" id="phone_no" name="phone_no" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-md font-medium text-gray-900">Password</label>
+                <input type="text" id="password" name="password" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="confirmPassword" class="block text-md font-medium text-gray-900">Confirm Password</label>
+                <input type="text" id="confirm_password" name="confirm_password" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Pharmacy</button>
+        </form>
+
+        <!-- Add Blood Bank Form -->
+        <h2 class="text-xl font-bold mt-8 mb-4">Add Blood Bank</h2>
+        <form id="addBloodBankForm">
+            <div class="mb-4">
+                <label for="bloodbank_id" class="block text-md font-medium text-gray-900">Blood Bank ID</label>
+                <input type="text" id="bloodbank_id" name="bloodbank_id" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="bloodbankName" class="block text-md font-medium text-gray-900">Blood Bank Name</label>
+                <input type="text" id="bloodbankName" name="bloodbank_name" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-md font-medium text-gray-900">Address</label>
+                <input type="text" id="baddress" name="address" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="ownerName" class="block text-md font-medium text-gray-900">Owner Name</label>
+                <input type="text" id="bownerName" name="owner_name" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="licenseNo" class="block text-md font-medium text-gray-900">License No</label>
+                <input type="text" id="blicenseNo" name="license_no" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="phoneNo" class="block text-md font-medium text-gray-900">Phone No</label>
+                <input type="text" id="bphoneNo" name="phone_no" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="bloodbank_type" class="block text-md font-medium text-gray-900">Type</label>
+                <input type="text" id="bloodbank_type" name="bloodbank_type" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-md font-medium text-gray-900">Password</label>
+                <input type="password" id="bpassword" name="password" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="confirmPassword" class="block text-md font-medium text-gray-900">Confirm Password</label>
+                <input type="password" id="bconfirmPassword" name="confirm_password" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Blood Bank</button>
+        </form>
+
+        <!-- Add Pathology Form -->
+        <h2 class="text-xl font-bold mt-8 mb-4">Add Pathology</h2>
+        <form id="addPathologyForm">
+            <div class="mb-4">
+                <label for="pathologyID" class="block text-md font-medium text-gray-900">Pathology ID</label>
+                <input type="text" id="pathologyID" name="pathologyID" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="pathologyName" class="block text-md font-medium text-gray-900">Pathology Name</label>
+                <input type="text" id="pathologyName" name="pathologyName" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="pathologyOwnerName" class="block text-md font-medium text-gray-900">Owner Name</label>
+                <input type="text" id="pathologyOwnerName" name="ownerName" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="pathologyLicenseNo" class="block text-md font-medium text-gray-900">License No</label>
+                <input type="text" id="pathologyLicenseNo" name="licenseNo" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="pathologyMobileNo" class="block text-md font-medium text-gray-900">Mobile No</label>
+                <input type="text" id="pathologyMobileNo" name="mobileNo" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="pathologyEmailId" class="block text-md font-medium text-gray-900">Email ID</label>
+                <input type="email" id="pathologyEmailId" name="emailId" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="pathologyAddress" class="block text-md font-medium text-gray-900">Address</label>
+                <input type="text" id="pathologyAddress" name="address" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="pathologyPassword" class="block text-md font-medium text-gray-900">Password</label>
+                <input type="password" id="pathologyPassword" name="password" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="confirm_password" class="block text-md font-medium text-gray-900">Password</label>
+                <input type="password" id="pathologyconfirmPassword" name="confirm_password" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Pathology</button>
+        </form>
+
+
+        <!-- Add Hospital & Admin Form -->
+        <h2 class="text-xl font-bold mt-8 mb-4">Add Hospital & Admin</h2>
+        <form id="addHospitalAdminForm">
+            <div class="mb-4">
+                <label for="hospitalName" class="block text-md font-medium text-gray-900">Hospital Name</label>
+                <input type="text" id="hospitalName" name="hospitalName" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-md font-medium text-gray-900">Hospital Address</label>
+                <input type="text" id="hospitalAddress" name="address" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="contactNumber" class="block text-md font-medium text-gray-900">Contact Number</label>
+                <input type="text" id="hospitalContactNumber" name="contactNumber" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-md font-medium text-gray-900">Email</label>
+                <input type="email" id="hospitalEmail" name="email" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="adminName" class="block text-md font-medium text-gray-900">Admin Name</label>
+                <input type="text" id="adminName" name="adminName" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="adminUsername" class="block text-md font-medium text-gray-900">Admin Username</label>
+                <input type="text" id="adminUsername" name="adminUsername" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <div class="mb-4">
+                <label for="adminPassword" class="block text-md font-medium text-gray-900">Admin Password</label>
+                <input type="password" id="adminPassword" name="adminPassword" required
+                    class="w-full p-2 border border-gray-300 rounded mt-2">
+            </div>
+            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Hospital & Admin</button>
+        </form>
+
+    </div>
+
+    <script>
+
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            alert('Please Login Before Use. Redirecting to login.');
+            window.location.href = 'SystemAdminCopy.html';
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Attach form submission event listener
+            const addPharmacyForm = document.getElementById('addPharmacyForm');
+            if (addPharmacyForm) {
+                addPharmacyForm.addEventListener('submit', async (event) => {
+                    event.preventDefault(); // Prevent default form submission behavior
+
+                    // Get token from localStorage
+                    const token = localStorage.getItem('authToken');
+                    if (!token) {
+                        alert('No token found. Please log in again.');
+                        return;
+                    }
+
+                    // Collect form data
+                    const pharmacyData = {
+                        pharmacy_id: document.getElementById('pharmacy_id').value.trim(),
+                        pharmacy_name: document.getElementById('pharmacy_name').value.trim(),
+                        address: document.getElementById('address').value.trim(),
+                        owner_name: document.getElementById('owner_name').value.trim(),
+                        license_no: document.getElementById('license_no').value.trim(),
+                        phone_no: document.getElementById('phone_no').value.trim(),
+                        password: document.getElementById('password').value.trim(),
+                        confirm_password: document.getElementById('confirm_password').value.trim(),
+                    };
+
+                    // Validation for empty fields
+                    for (const [key, value] of Object.entries(pharmacyData)) {
+                        if (!value) {
+                            alert(`${key.replace('_', ' ')} is required`);
+                            return;
+                        }
+                    }
+
+                    // Validation for password match
+                    if (pharmacyData.password !== pharmacyData.confirm_password) {
+                        alert('Password and Confirm Password do not match.');
+                        return;
+                    }
+
+                    try {
+                        // Make the POST request
+                        const response = await fetch('http://localhost:5011/api/systemadmin/register/Pharmacy', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`, // Attach token in Authorization header
+                            },
+                            body: JSON.stringify(pharmacyData),
+                        });
+
+                        const result = await response.json();
+                        if (response.ok) {
+                            alert('Pharmacy added successfully!');
+                            // Optionally reset the form
+                            addPharmacyForm.reset();
+                        } else {
+                            alert('Failed to add pharmacy: ' + result.message);
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert('An error occurred: ' + error.message);
+                    }
+                });
+            } else {
+                console.error('Add Pharmacy form not found.');
+            }
+        });
+
+        document.getElementById('addBloodBankForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const bloodBankData = {
+                bloodbank_id: document.getElementById('bloodbank_id').value,
+                bloodbank_name: document.getElementById('bloodbankName').value,
+                address: document.getElementById('baddress').value,
+                owner_name: document.getElementById('bownerName').value,
+                license_no: document.getElementById('blicenseNo').value,
+                phone_no: document.getElementById('bphoneNo').value,
+                bloodbank_type: document.getElementById('bloodbank_type').value,
+                password: document.getElementById('bpassword').value,
+                confirm_password: document.getElementById('bconfirmPassword').value
+            };
+
+            try {
+                const token = localStorage.getItem('authToken');
+
+                const response = await fetch('http://localhost:5011/api/systemadmin/register/BloodBank', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(bloodBankData),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Blood bank added successfully!');
+                } else {
+                    alert('Failed to add blood bank: ' + result.message);
+                }
+            } catch (error) {
+                alert('An error occurred: ' + error.message);
+            }
+        });
+
+        document.getElementById('addPathologyForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const pathologyData = {
+                pathologyID: document.getElementById('pathologyID').value,
+                pathology_name: document.getElementById('pathologyName').value,
+                owner_name: document.getElementById('pathologyOwnerName').value,
+                license_no: document.getElementById('pathologyLicenseNo').value,
+                mobile_no: document.getElementById('pathologyMobileNo').value,
+                email_id: document.getElementById('pathologyEmailId').value,
+                address: document.getElementById('pathologyAddress').value,
+                password: document.getElementById('pathologyPassword').value,
+                confirm_password: document.getElementById('pathologyconfirmPassword').value
+            };
+
+            try {
+                const token = localStorage.getItem('authToken');
+
+                const response = await fetch('http://localhost:5011/api/systemadmin/register/Pathology', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(pathologyData),
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    alert('Pathology added successfully!');
+                } else {
+                    alert('Failed to add pathology: ' + result.message);
+                }
+            } catch (error) {
+                alert('An error occurred: ' + error.message);
+            }
+        });
+
+        document.getElementById('addHospitalAdminForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Gather form data with the correct keys for the backend
+            const hospitalData = {
+                hospital_name: document.getElementById('hospitalName').value,
+                address: document.getElementById('hospitalAddress').value,
+                contactNumber: document.getElementById('hospitalContactNumber').value,
+                email: document.getElementById('hospitalEmail').value,
+                adminName: document.getElementById('adminName').value,
+                adminUsername: document.getElementById('adminUsername').value,
+                adminPassword: document.getElementById('adminPassword').value
+            };
+
+            // Send the data to the backend API
+            try {
+                const token = localStorage.getItem('authToken');
+
+                const response = await fetch('http://localhost:5011/api/systemadmin/registerHospitalAndAdmin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(hospitalData),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert('Hospital and Admin added successfully!');
+                } else {
+                    alert('Failed to add hospital: ' + result.error);
+                }
+            } catch (error) {
+                alert('An error occurred: ' + error.message);
+            }
+        });
+    </script>
+</body>
+
+</html>
